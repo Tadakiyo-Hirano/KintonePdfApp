@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   # get '/documents', to: 'documents#new'
   resources :documents
   resources :participations
+  resources :estimates
 end
