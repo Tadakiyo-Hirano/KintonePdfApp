@@ -57,12 +57,105 @@ class EstimatePdf < Prawn::Document
               make_cell(width: 59),
               make_cell(width: 54),
               make_cell(width: 54),
-              make_cell(width: 100)
+              make_cell(width: 104)
+            ],
+            [
+              make_cell(width: 111, height: 23),
+              make_cell(width: 89),
+              make_cell(width: 59),
+              make_cell(width: 54),
+              make_cell(width: 54),
+              make_cell(width: 104)
+            ],
+            [
+              make_cell(width: 111, height: 23),
+              make_cell(width: 89),
+              make_cell(width: 59),
+              make_cell(width: 54),
+              make_cell(width: 54),
+              make_cell(width: 104)
+            ],
+            [
+              make_cell(width: 111, height: 23),
+              make_cell(width: 89),
+              make_cell(width: 59),
+              make_cell(width: 54),
+              make_cell(width: 54),
+              make_cell(width: 104)
+            ],
+            [
+              make_cell(width: 111, height: 23),
+              make_cell(width: 89),
+              make_cell(width: 59),
+              make_cell(width: 54),
+              make_cell(width: 54),
+              make_cell(width: 104)
+            ],
+            [
+              make_cell(width: 111, height: 23),
+              make_cell(width: 89),
+              make_cell(width: 59),
+              make_cell(width: 54),
+              make_cell(width: 54),
+              make_cell(width: 104)
+            ],
+            [
+              make_cell(width: 111, height: 23),
+              make_cell(width: 89),
+              make_cell(width: 59),
+              make_cell(width: 54),
+              make_cell(width: 54),
+              make_cell(width: 104)
+            ],
+            [
+              make_cell(width: 111, height: 23),
+              make_cell(width: 89),
+              make_cell(width: 59),
+              make_cell(width: 54),
+              make_cell(width: 54),
+              make_cell(width: 104)
             ]
           ]){
-    
           }
         }
+
+        bounding_box([26, 372], width: 700, height: 700
+          ) {
+            table([
+              [
+                make_cell(width: 111, height: 22),
+                make_cell(width: 118.5),
+                make_cell(width: 108.5),
+                make_cell(width: 133)
+              ],
+              [
+                make_cell(width: 111, height: 22),
+                make_cell(width: 118.5),
+                make_cell(width: 108.5),
+                make_cell(width: 133)
+              ]
+            ]){
+            }
+          }
+
+          bounding_box([26, 372], width: 700, height: 700
+          ) {
+            table([
+              [
+                make_cell(width: 111, height: 22),
+                make_cell(width: 118.5),
+                make_cell(width: 108.5),
+                make_cell(width: 133)
+              ],
+              [
+                make_cell(width: 111, height: 22),
+                make_cell(width: 118.5),
+                make_cell(width: 108.5),
+                make_cell(width: 133)
+              ]
+            ]){
+            }
+          }
   end
 
   def data
