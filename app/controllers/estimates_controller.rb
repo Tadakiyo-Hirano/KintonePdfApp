@@ -13,7 +13,7 @@ class EstimatesController < ApplicationController
       uri = URI.parse(url)
 
       req = Net::HTTP::Get.new(uri.path)
-      req['X-Cybozu-API-Token'] = 'vltS2Jbm8GgWlrck1oUR88eLmmvTx3IvafBAXEVC'
+      req['X-Cybozu-API-Token'] = ENV['API_TOKEN']
       req['Content-Type'] = 'application/json'
       req.body = JSON.generate({"app": 75, "id": record_id })
 

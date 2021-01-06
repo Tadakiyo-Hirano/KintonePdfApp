@@ -47,7 +47,18 @@ class EstimatePdf < Prawn::Document
       draw_text ')', size: 9, at: [490, 575.5]
       stroke_horizontal_line 26, 255.5, at: 569
       stroke_horizontal_line 26, 255.5, at: 567
+      
+      draw_text '品 　　　名', size: 10, at: [55, 541]
+      draw_text '規 　　　格', size: 10, at: [155, 541]
+      draw_text '単　位', size: 11, at: [240, 541]
+      draw_text '数　量', size: 11, at: [296, 541]
+      draw_text '単　価', size: 11, at: [350, 541]
+      draw_text '金　　　額', size: 11, at: [418, 541]
 
+      draw_text '納　入(履行)場　所', size: 11, at: [34, 357]
+      draw_text '納　　期', size: 10.5, at: [259, 357]
+      draw_text '(履行期限)', size: 10.5, at: [310, 357]
+      draw_text '契', size: 11, at: [38, 335]
       bounding_box([26, 556], width: 700, height: 700
         ) {
           table([
