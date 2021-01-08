@@ -20,7 +20,7 @@ class EstimatesController < ApplicationController
       Net::HTTP.start(uri.host, uri.port, :use_ssl => true) {|http|
         res = http.request(req)
         res.code.to_i
-        @participation = JSON.parse(res.body)
+        @estimate = JSON.parse(res.body)
       }
 
       respond_to do |format|
@@ -30,7 +30,7 @@ class EstimatesController < ApplicationController
     
           # disposition: "inline" によりPDFはダウンロードではなく画面に表示される
           send_data pdf.render,
-            filename:    "見積書#{@participation['record']['serial_number']['value']}.pdf",
+            filename:    "見積書#{@estimate['record']['serial_number']['value']}.pdf",
             type:        "application/pdf",
             disposition: "inline"
         end
