@@ -216,6 +216,42 @@ class EstimatePdf < Prawn::Document
     draw_text @estimate['record']['estimate_delivery_place']['value'], size: 11, at: [155, 357]
     draw_text @estimate['record']['estimate_delivery_date']['value'], size: 11, at: [375, 357]
     draw_text @estimate['record']['expiration_date']['value'], size: 11, at: [375, 335]
+    
+    draw_text @estimate['record']['estimate_details']['value'][0]['value']['estimate_product_name']['value'], size: 8, at: [30, 518]
+    draw_text @estimate['record']['estimate_details']['value'][1]['value']['estimate_product_name']['value'], size: 8, at: [30, 495]
+    draw_text @estimate['record']['estimate_details']['value'][2]['value']['estimate_product_name']['value'], size: 8, at: [30, 472]
+    draw_text @estimate['record']['estimate_details']['value'][3]['value']['estimate_product_name']['value'], size: 8, at: [30, 449]
+    draw_text @estimate['record']['estimate_details']['value'][4]['value']['estimate_product_name']['value'], size: 8, at: [30, 426]
+    draw_text @estimate['record']['estimate_details']['value'][5]['value']['estimate_product_name']['value'], size: 8, at: [30, 403]
+    draw_text @estimate['record']['estimate_details']['value'][6]['value']['estimate_product_name']['value'], size: 8, at: [30, 380]
+
+    draw_text @estimate['record']['estimate_details']['value'][0]['value']['estimate_standard_1']['value'], size: 6, at: [140, 525]
+    draw_text @estimate['record']['estimate_details']['value'][1]['value']['estimate_standard_1']['value'], size: 6, at: [140, 502]
+    draw_text @estimate['record']['estimate_details']['value'][2]['value']['estimate_standard_1']['value'], size: 6, at: [140, 479]
+    draw_text @estimate['record']['estimate_details']['value'][3]['value']['estimate_standard_1']['value'], size: 6, at: [140, 456]
+    draw_text @estimate['record']['estimate_details']['value'][4]['value']['estimate_standard_1']['value'], size: 6, at: [140, 433]
+    draw_text @estimate['record']['estimate_details']['value'][5]['value']['estimate_standard_1']['value'], size: 6, at: [140, 410]
+    draw_text @estimate['record']['estimate_details']['value'][6]['value']['estimate_standard_1']['value'], size: 6, at: [140, 387]
+
+    draw_text @estimate['record']['estimate_details']['value'][0]['value']['estimate_standard_2']['value'], size: 6, at: [140, 515]
+    draw_text @estimate['record']['estimate_details']['value'][1]['value']['estimate_standard_2']['value'], size: 6, at: [140, 492]
+    draw_text @estimate['record']['estimate_details']['value'][2]['value']['estimate_standard_2']['value'], size: 6, at: [140, 469]
+    draw_text @estimate['record']['estimate_details']['value'][3]['value']['estimate_standard_2']['value'], size: 6, at: [140, 446]
+    draw_text @estimate['record']['estimate_details']['value'][4]['value']['estimate_standard_2']['value'], size: 6, at: [140, 423]
+    draw_text @estimate['record']['estimate_details']['value'][5]['value']['estimate_standard_2']['value'], size: 6, at: [140, 400]
+    draw_text @estimate['record']['estimate_details']['value'][6]['value']['estimate_standard_2']['value'], size: 6, at: [140, 377]
+
+    # 380.step(530, 23) do |n|
+    #   draw_text 'EA', size: 10, at: [250, n]
+    # end
+
+    draw_text @estimate['record']['estimate_details']['value'][0]['value']['estimate_unit']['value'], size: 10, at: [250, 517]
+    draw_text @estimate['record']['estimate_details']['value'][1]['value']['estimate_unit']['value'], size: 10, at: [250, 494]
+    draw_text @estimate['record']['estimate_details']['value'][2]['value']['estimate_unit']['value'], size: 10, at: [250, 471]
+    draw_text @estimate['record']['estimate_details']['value'][3]['value']['estimate_unit']['value'], size: 10, at: [250, 448]
+    draw_text @estimate['record']['estimate_details']['value'][4]['value']['estimate_unit']['value'], size: 10, at: [250, 425]
+    draw_text @estimate['record']['estimate_details']['value'][5]['value']['estimate_unit']['value'], size: 10, at: [250, 402]
+    draw_text @estimate['record']['estimate_details']['value'][6]['value']['estimate_unit']['value'], size: 10, at: [250, 379]
   end
 
   def development
