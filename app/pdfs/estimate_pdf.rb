@@ -8,6 +8,7 @@ class EstimatePdf < Prawn::Document
 
     body
     data
+    @estimate['record']['use_breakdown']['value'].present? ? products_data : use_breakdown_data
     development
   end
 
@@ -15,17 +16,16 @@ class EstimatePdf < Prawn::Document
     draw_text '見 　　　　積 　　　　書', size: 12, at: [194, 667]
 
     draw_text '件名リスト一連番号', size: 11, at: [32, 614]
-    bounding_box([26, 629], width: 700, height: 90
-      ) {
-        table([
-          [
-            make_cell(width: 111, height: 23),
-            make_cell(width: 119)
-          ]
-        ]){
-  
-        }
+    bounding_box([26, 629], width: 700, height: 90) {
+      table([
+        [
+          make_cell(width: 111, height: 23),
+          make_cell(width: 119)
+        ]
+      ]){
+
       }
+    }
 
       draw_text '金　　額', size: 11, at: [29, 574]
       draw_text '￥', size: 12, at: [80, 573]
@@ -72,76 +72,75 @@ class EstimatePdf < Prawn::Document
       draw_text '期', size: 10.5, at: [328, 335]
       draw_text '間', size: 10.5, at: [340, 335]
 
-      bounding_box([26, 556], width: 700, height: 700
-        ) {
-          table([
-            [
-              make_cell(width: 111, height: 23),
-              make_cell(width: 89),
-              make_cell(width: 59),
-              make_cell(width: 54),
-              make_cell(width: 54),
-              make_cell(width: 104)
-            ],
-            [
-              make_cell(width: 111, height: 23),
-              make_cell(width: 89),
-              make_cell(width: 59),
-              make_cell(width: 54),
-              make_cell(width: 54),
-              make_cell(width: 104)
-            ],
-            [
-              make_cell(width: 111, height: 23),
-              make_cell(width: 89),
-              make_cell(width: 59),
-              make_cell(width: 54),
-              make_cell(width: 54),
-              make_cell(width: 104)
-            ],
-            [
-              make_cell(width: 111, height: 23),
-              make_cell(width: 89),
-              make_cell(width: 59),
-              make_cell(width: 54),
-              make_cell(width: 54),
-              make_cell(width: 104)
-            ],
-            [
-              make_cell(width: 111, height: 23),
-              make_cell(width: 89),
-              make_cell(width: 59),
-              make_cell(width: 54),
-              make_cell(width: 54),
-              make_cell(width: 104)
-            ],
-            [
-              make_cell(width: 111, height: 23),
-              make_cell(width: 89),
-              make_cell(width: 59),
-              make_cell(width: 54),
-              make_cell(width: 54),
-              make_cell(width: 104)
-            ],
-            [
-              make_cell(width: 111, height: 23),
-              make_cell(width: 89),
-              make_cell(width: 59),
-              make_cell(width: 54),
-              make_cell(width: 54),
-              make_cell(width: 104)
-            ],
-            [
-              make_cell(width: 111, height: 23),
-              make_cell(width: 89),
-              make_cell(width: 59),
-              make_cell(width: 54),
-              make_cell(width: 54),
-              make_cell(width: 104)
-            ]
-          ]){
-          }
+      bounding_box([26, 556], width: 700, height: 700) {
+        table([
+          [
+            make_cell(width: 111, height: 23),
+            make_cell(width: 89),
+            make_cell(width: 59),
+            make_cell(width: 54),
+            make_cell(width: 54),
+            make_cell(width: 104)
+          ],
+          [
+            make_cell(width: 111, height: 23),
+            make_cell(width: 89),
+            make_cell(width: 59),
+            make_cell(width: 54),
+            make_cell(width: 54),
+            make_cell(width: 104)
+          ],
+          [
+            make_cell(width: 111, height: 23),
+            make_cell(width: 89),
+            make_cell(width: 59),
+            make_cell(width: 54),
+            make_cell(width: 54),
+            make_cell(width: 104)
+          ],
+          [
+            make_cell(width: 111, height: 23),
+            make_cell(width: 89),
+            make_cell(width: 59),
+            make_cell(width: 54),
+            make_cell(width: 54),
+            make_cell(width: 104)
+          ],
+          [
+            make_cell(width: 111, height: 23),
+            make_cell(width: 89),
+            make_cell(width: 59),
+            make_cell(width: 54),
+            make_cell(width: 54),
+            make_cell(width: 104)
+          ],
+          [
+            make_cell(width: 111, height: 23),
+            make_cell(width: 89),
+            make_cell(width: 59),
+            make_cell(width: 54),
+            make_cell(width: 54),
+            make_cell(width: 104)
+          ],
+          [
+            make_cell(width: 111, height: 23),
+            make_cell(width: 89),
+            make_cell(width: 59),
+            make_cell(width: 54),
+            make_cell(width: 54),
+            make_cell(width: 104)
+          ],
+          [
+            make_cell(width: 111, height: 23),
+            make_cell(width: 89),
+            make_cell(width: 59),
+            make_cell(width: 54),
+            make_cell(width: 54),
+            make_cell(width: 104)
+          ]
+        ]){
         }
+      }
 
         draw_text '上記に関して「入札及び契約心得」、', size: 10.3, at: [38, 284]
         draw_text '「オープンカウンター方式実施要領」及び「標準契約書等」', size: 10.3, at: [214, 284]
@@ -168,27 +167,25 @@ class EstimatePdf < Prawn::Document
         draw_text '：', size: 11, at: [276.5, 89]
         draw_text "\u329e", size: 11, at: [464, 90]
 
-        bounding_box([26, 372], width: 700, height: 700
-          ) {
-            table([
-              [
-                make_cell(width: 111, height: 22),
-                make_cell(width: 118.5),
-                make_cell(width: 108.5),
-                make_cell(width: 133)
-              ],
-              [
-                make_cell(width: 111, height: 22),
-                make_cell(width: 118.5),
-                make_cell(width: 108.5),
-                make_cell(width: 133)
-              ]
-            ]){
-            }
+        bounding_box([26, 372], width: 700, height: 700) {
+          table([
+            [
+              make_cell(width: 111, height: 22),
+              make_cell(width: 118.5),
+              make_cell(width: 108.5),
+              make_cell(width: 133)
+            ],
+            [
+              make_cell(width: 111, height: 22),
+              make_cell(width: 118.5),
+              make_cell(width: 108.5),
+              make_cell(width: 133)
+            ]
+          ]){
           }
+        }
 
-          bounding_box([26, 372], width: 700, height: 700
-          ) {
+          bounding_box([26, 372], width: 700, height: 700) {
             table([
               [
                 make_cell(width: 111, height: 22),
@@ -217,41 +214,172 @@ class EstimatePdf < Prawn::Document
     draw_text @estimate['record']['estimate_delivery_date']['value'], size: 11, at: [375, 357]
     draw_text @estimate['record']['expiration_date']['value'], size: 11, at: [375, 335]
     
-    draw_text @estimate['record']['estimate_details']['value'][0]['value']['estimate_product_name']['value'], size: 8, at: [30, 518]
-    draw_text @estimate['record']['estimate_details']['value'][1]['value']['estimate_product_name']['value'], size: 8, at: [30, 495]
-    draw_text @estimate['record']['estimate_details']['value'][2]['value']['estimate_product_name']['value'], size: 8, at: [30, 472]
-    draw_text @estimate['record']['estimate_details']['value'][3]['value']['estimate_product_name']['value'], size: 8, at: [30, 449]
-    draw_text @estimate['record']['estimate_details']['value'][4]['value']['estimate_product_name']['value'], size: 8, at: [30, 426]
-    draw_text @estimate['record']['estimate_details']['value'][5]['value']['estimate_product_name']['value'], size: 8, at: [30, 403]
-    draw_text @estimate['record']['estimate_details']['value'][6]['value']['estimate_product_name']['value'], size: 8, at: [30, 380]
+    
 
-    draw_text @estimate['record']['estimate_details']['value'][0]['value']['estimate_standard_1']['value'], size: 6, at: [140, 525]
-    draw_text @estimate['record']['estimate_details']['value'][1]['value']['estimate_standard_1']['value'], size: 6, at: [140, 502]
-    draw_text @estimate['record']['estimate_details']['value'][2]['value']['estimate_standard_1']['value'], size: 6, at: [140, 479]
-    draw_text @estimate['record']['estimate_details']['value'][3]['value']['estimate_standard_1']['value'], size: 6, at: [140, 456]
-    draw_text @estimate['record']['estimate_details']['value'][4]['value']['estimate_standard_1']['value'], size: 6, at: [140, 433]
-    draw_text @estimate['record']['estimate_details']['value'][5]['value']['estimate_standard_1']['value'], size: 6, at: [140, 410]
-    draw_text @estimate['record']['estimate_details']['value'][6]['value']['estimate_standard_1']['value'], size: 6, at: [140, 387]
+    # 見積日
+    # draw_text @estimate['record']['estimated_date']['value'], size: 11, at: [52, 195]
 
-    draw_text @estimate['record']['estimate_details']['value'][0]['value']['estimate_standard_2']['value'], size: 6, at: [140, 515]
-    draw_text @estimate['record']['estimate_details']['value'][1]['value']['estimate_standard_2']['value'], size: 6, at: [140, 492]
-    draw_text @estimate['record']['estimate_details']['value'][2]['value']['estimate_standard_2']['value'], size: 6, at: [140, 469]
-    draw_text @estimate['record']['estimate_details']['value'][3]['value']['estimate_standard_2']['value'], size: 6, at: [140, 446]
-    draw_text @estimate['record']['estimate_details']['value'][4]['value']['estimate_standard_2']['value'], size: 6, at: [140, 423]
-    draw_text @estimate['record']['estimate_details']['value'][5]['value']['estimate_standard_2']['value'], size: 6, at: [140, 400]
-    draw_text @estimate['record']['estimate_details']['value'][6]['value']['estimate_standard_2']['value'], size: 6, at: [140, 377]
+    # 住所
+    draw_text @estimate['record']['company_address']['value'], size: 11, at: [290, 128]
+    draw_text @estimate['record']['company_name']['value'], size: 11, at: [290, 109]
+    draw_text @estimate['record']['director']['value'], size: 11, at: [290, 90]
+  end
 
-    # 380.step(530, 23) do |n|
-    #   draw_text 'EA', size: 10, at: [250, n]
-    # end
+  def products_data
+    # 品名
+    def estimate_product_name(value_num)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_product_name']['value']
+    end
+    
+    draw_text estimate_product_name(0), size: 8, at: [30, 518]
+    draw_text estimate_product_name(1), size: 8, at: [30, 495]
+    draw_text estimate_product_name(2), size: 8, at: [30, 472]
+    draw_text estimate_product_name(3), size: 8, at: [30, 449]
+    draw_text estimate_product_name(4), size: 8, at: [30, 426]
+    draw_text estimate_product_name(5), size: 8, at: [30, 403]
+    draw_text estimate_product_name(6), size: 8, at: [30, 380]
 
-    draw_text @estimate['record']['estimate_details']['value'][0]['value']['estimate_unit']['value'], size: 10, at: [250, 517]
-    draw_text @estimate['record']['estimate_details']['value'][1]['value']['estimate_unit']['value'], size: 10, at: [250, 494]
-    draw_text @estimate['record']['estimate_details']['value'][2]['value']['estimate_unit']['value'], size: 10, at: [250, 471]
-    draw_text @estimate['record']['estimate_details']['value'][3]['value']['estimate_unit']['value'], size: 10, at: [250, 448]
-    draw_text @estimate['record']['estimate_details']['value'][4]['value']['estimate_unit']['value'], size: 10, at: [250, 425]
-    draw_text @estimate['record']['estimate_details']['value'][5]['value']['estimate_unit']['value'], size: 10, at: [250, 402]
-    draw_text @estimate['record']['estimate_details']['value'][6]['value']['estimate_unit']['value'], size: 10, at: [250, 379]
+    # 規格(上段)
+    def estimate_standard_1(value_num)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_standard_1']['value']
+    end
+
+    draw_text estimate_standard_1(0), size: 6, at: [140, 525]
+    draw_text estimate_standard_1(1), size: 6, at: [140, 502]
+    draw_text estimate_standard_1(2), size: 6, at: [140, 479]
+    draw_text estimate_standard_1(3), size: 6, at: [140, 456]
+    draw_text estimate_standard_1(4), size: 6, at: [140, 433]
+    draw_text estimate_standard_1(5), size: 6, at: [140, 410]
+    draw_text estimate_standard_1(5), size: 6, at: [140, 387]
+
+    # 規格(下段)
+    def estimate_standard_2(value_num)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_standard_2']['value']
+    end
+
+    draw_text estimate_standard_2(0), size: 6, at: [140, 515]
+    draw_text estimate_standard_2(1), size: 6, at: [140, 492]
+    draw_text estimate_standard_2(2), size: 6, at: [140, 469]
+    draw_text estimate_standard_2(3), size: 6, at: [140, 446]
+    draw_text estimate_standard_2(4), size: 6, at: [140, 423]
+    draw_text estimate_standard_2(5), size: 6, at: [140, 400]
+    draw_text estimate_standard_2(6), size: 6, at: [140, 377]
+
+    # 単位
+    def estimate_unit(value_num)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_unit']['value']
+    end
+
+    draw_text estimate_unit(0), size: 10, at: [250, 517]
+    draw_text estimate_unit(1), size: 10, at: [250, 494]
+    draw_text estimate_unit(2), size: 10, at: [250, 471]
+    draw_text estimate_unit(3), size: 10, at: [250, 448]
+    draw_text estimate_unit(4), size: 10, at: [250, 425]
+    draw_text estimate_unit(5), size: 10, at: [250, 402]
+    draw_text estimate_unit(6), size: 10, at: [250, 379]
+
+    # 数量
+    def estimate_quantity(value_num)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_quantity']['value'].to_i.to_s(:delimited)
+    end
+
+    bounding_box([285, 533], width: 700, height: 700){
+      table([
+        [
+          make_cell(content: estimate_quantity(0), align: :right, size: 10, width: 54, height: 23)
+        ],
+        [
+          make_cell(content: estimate_quantity(1), align: :right, size: 10, height: 23)
+        ],
+        [
+          make_cell(content: estimate_quantity(2), align: :right, size: 10, height: 23)
+        ],
+        [
+          make_cell(content: estimate_quantity(3), align: :right, size: 10, height: 23)
+        ],
+        [
+          make_cell(content: estimate_quantity(4), align: :right, size: 10, height: 23)
+        ],
+        [
+          make_cell(content: estimate_quantity(5), align: :right, size: 10, height: 23)
+        ],
+        [
+          make_cell(content: estimate_quantity(6), align: :right, size: 10, height: 23)
+        ]
+      ]){
+        cells.borders = [] # 枠線非表示
+      }
+    }
+
+    # 単価
+    def estimate_unit_price(value_num)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited)
+    end
+
+    bounding_box([339, 533], width: 700, height: 700){
+      table([
+        [
+          make_cell(content: estimate_unit_price(0), align: :right, size: 9, width: 54, height: 23)
+        ],
+        [
+          make_cell(content: estimate_unit_price(1), align: :right, size: 9, height: 23)
+        ],
+        [
+          make_cell(content: estimate_unit_price(2), align: :right, size: 9, height: 23)
+        ],
+        [
+          make_cell(content: estimate_unit_price(3), align: :right, size: 9, height: 23)
+        ],
+        [
+          make_cell(content: estimate_unit_price(4), align: :right, size: 9, height: 23)
+        ],
+        [
+          make_cell(content: estimate_unit_price(5), align: :right, size: 10, height: 23)
+        ],
+        [
+          make_cell(content: estimate_unit_price(6), align: :right, size: 10, height: 23)
+        ]
+      ]){
+        cells.borders = [] # 枠線非表示
+      }
+    }
+
+    # 金額(小計)
+    def estimate_subtotal_price(value_num)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited)
+    end
+
+    bounding_box([441, 533], width: 700, height: 700){
+      table([
+        [
+          make_cell(content: estimate_subtotal_price(0), align: :right, size: 9, width: 54, height: 23)
+        ],
+        [
+          make_cell(content: estimate_subtotal_price(1), align: :right, size: 9, height: 23)
+        ],
+        [
+          make_cell(content: estimate_subtotal_price(2), align: :right, size: 9, height: 23)
+        ],
+        [
+          make_cell(content: estimate_subtotal_price(3), align: :right, size: 9, height: 23)
+        ],
+        [
+          make_cell(content: estimate_subtotal_price(4), align: :right, size: 9, height: 23)
+        ],
+        [
+          make_cell(content: estimate_subtotal_price(5), align: :right, size: 10, height: 23)
+        ],
+        [
+          make_cell(content: estimate_subtotal_price(6), align: :right, size: 10, height: 23)
+        ]
+      ]){
+        cells.borders = [] # 枠線非表示
+      }
+    }
+  end
+
+  def use_breakdown_data
+    draw_text "#{@estimate['record']['subject']['value']}　別紙明細の通り", size: 10, at: [30, 518]
   end
 
   def development
