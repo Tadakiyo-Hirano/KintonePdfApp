@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :documents
   resources :participations
   resources :estimates
+  resources :deliverys
 end
