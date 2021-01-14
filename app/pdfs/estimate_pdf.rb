@@ -8,7 +8,7 @@ class EstimatePdf < Prawn::Document
 
     body
     data
-    @estimate['record']['use_breakdown']['value'].present? ? products_data : use_breakdown_data
+    @estimate['record']['use_breakdown']['value'].blank? ? products_data : use_breakdown_data
     development
   end
 
@@ -340,7 +340,7 @@ class EstimatePdf < Prawn::Document
           make_cell(content: estimate_unit_price(6), align: :right, size: 10, height: 23)
         ]
       ]){
-        cells.borders = [] # 枠線非表示
+        cells.borders = []
       }
     }
 
@@ -373,9 +373,23 @@ class EstimatePdf < Prawn::Document
           make_cell(content: estimate_subtotal_price(6), align: :right, size: 10, height: 23)
         ]
       ]){
-        cells.borders = [] # 枠線非表示
+        cells.borders = []
       }
     }
+
+    # 見積作成日
+    bounding_box([5, 210], width: 700, height: 700){
+      table([
+        [
+          make_cell(content: @estimate['record']['estimated_date_year']['value'], align: :right, size: 10, width: 45),
+          make_cell(content: @estimate['record']['estimated_date_month']['value'], align: :right, size: 10, width: 35),
+          make_cell(content: @estimate['record']['estimated_date_day']['value'], align: :right, size: 10, width: 36)
+        ]
+      ]){
+        cells.borders = []
+      }
+    }
+    
   end
 
   def use_breakdown_data
