@@ -45,6 +45,59 @@ class DeliveryPdf < Prawn::Document
       ]){
       }
     }
+
+    draw_text '契', size: 10.5, at: [44, 427]
+    draw_text '約', size: 10.5, at: [44.5, 406]
+    draw_text '者', size: 10.5, at: [44.5, 385]
+
+    draw_text '住所、会社名、代表者印', size: 10.6, at: [78, 447]
+
+    draw_text '調達要求番号', size: 10.6, at: [267, 448]
+    draw_text '確認番号', size: 10.5, at: [264, 424]
+    draw_text '(認証番号)', size: 10.5, at: [313, 424]
+    draw_text '契約年月日', size: 10.5, at: [267, 400]
+    draw_text '納期', size: 10.4, at: [267.5, 376]
+
+    draw_text '発送年月日', size: 10.4, at: [380, 448]
+    bounding_box([262, 458], width: 700, height: 500) {
+      table([
+        [
+          make_cell(width: 105, height: 24, border_width: 0.5),
+          make_cell(width: 105, border_width: 0.5)
+        ],
+        [
+          make_cell(height: 24, border_width: 0.5),
+          make_cell(border_width: 0.5)
+        ],
+        [
+          make_cell(height: 24, border_width: 0.5),
+          make_cell(border_width: 0.5)
+        ],
+        [
+          make_cell(height: 24, border_width: 0.5),
+          make_cell(border_width: 0.5)
+        ]
+      ]){
+      }
+    }
+
+    bounding_box([577, 458], width: 700, height: 500) {
+      table([
+        [
+          make_cell(width: 124, height: 24, border_width: 0.5)
+        ],
+        [
+          make_cell(height: 24, border_width: 0.5)
+        ],
+        [
+          make_cell(height: 24, border_width: 0.5)
+        ],
+        [
+          make_cell(height: 24, border_width: 0.5)
+        ]
+      ]){
+      }
+    }
   end
 
   def development
