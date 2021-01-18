@@ -58,7 +58,15 @@ class DeliveryPdf < Prawn::Document
     draw_text '契約年月日', size: 10.5, at: [267, 400]
     draw_text '納期', size: 10.4, at: [267.5, 376]
 
-    draw_text '発送年月日', size: 10.4, at: [380, 448]
+    draw_text '発送年月日', size: 10.4, at: [373, 448]
+    draw_text '輸送方法', size: 10.4, at: [373, 424]
+    draw_text '発送駅', size: 10.4, at: [373, 400]
+    draw_text '分割納入', size: 10.4, at: [373, 376]
+    draw_text '物品管理官命令印', size: 10.4, at: [478, 447]
+    draw_text '命令年月日', size: 10.4, at: [583, 448]
+    draw_text '管理簿登記年月日', size: 10.4, at: [583, 424]
+    draw_text '証書番号', size: 10.4, at: [583, 400]
+    draw_text '同上付与年月日', size: 10.4, at: [583, 376]
     bounding_box([262, 458], width: 700, height: 500) {
       table([
         [
@@ -94,6 +102,113 @@ class DeliveryPdf < Prawn::Document
         ],
         [
           make_cell(height: 24, border_width: 0.5)
+        ]
+      ]){
+      }
+    }
+
+    draw_text '資料種別', size: 10.6, at: [36, 351]
+    draw_text '相手方番号', size: 10.4, at: [100, 351]
+    draw_text '処', size: 10.6, at: [173, 351]
+    draw_text '理', size: 10.6, at: [191, 351]
+    draw_text '年', size: 10.6, at: [209, 351]
+    draw_text '月', size: 10, at: [228, 351]
+    draw_text '日', size: 9.5, at: [247, 351]
+    draw_text '物品区分', size: 10.6, at: [267, 351]
+    draw_text '要 求 番 号', size: 10.6, at: [320, 351]
+    draw_text '証 書 番 号', size: 10.6, at: [383, 351]
+    draw_text '記録区分', size: 10.6, at: [445.5, 351]
+    draw_text '納　　　期', size: 10.6, at: [498, 351]
+    draw_text '分納区分', size: 10.6, at: [562, 351]
+    draw_text '備考', size: 10.6, at: [614, 351]
+    draw_text '・', size: 14, at: [507, 322.5]
+    draw_text '・', size: 14, at: [528, 322.5]
+    draw_text '1', size: 10.5, at: [568.5, 335]
+    draw_text '2', size: 10.5, at: [590, 335]
+    draw_text '3', size: 10.5, at: [568.5, 324]
+    draw_text 'X', size: 10.5, at: [589.5, 324]
+    bounding_box([31, 362], width: 700, height: 500) {
+      table([
+        [
+          make_cell(width: 52.5, height: 15, border_width: 0.5),
+          make_cell(width: 84, border_width: 0.5),
+          make_cell(width: 94.5, border_width: 0.5),
+          make_cell(width: 52.5, border_width: 0.5),
+          make_cell(width: 63, border_width: 0.5),
+          make_cell(width: 63, border_width: 0.5),
+          make_cell(width: 52.5, border_width: 0.5),
+          make_cell(width: 63, border_width: 0.5),
+          make_cell(width: 52.5, border_width: 0.5),
+          make_cell(rowspan: 2, width: 92.5, border_width: 0.5),
+        ],
+        [
+          make_cell(height: 28, border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5)
+        ]
+      ]){
+      }
+    }
+
+    bounding_box([31, 319], width: 700, height: 500) {
+      table([
+        [
+          make_cell(width: 31.5, height: 24, border_width: 0.5),
+          make_cell(width: 105, border_width: 0.5),
+          make_cell(width: 94.5, border_width: 0.5),
+          make_cell(width: 84, border_width: 0.5),
+          make_cell(width: 31.5, border_width: 0.5),
+          make_cell(width: 31.5, border_width: 0.5),
+          make_cell(width: 41.5, border_width: 0.5),
+          make_cell(width: 53, border_width: 0.5),
+          make_cell(width: 105, border_width: 0.5), 
+          make_cell(width: 42, border_width: 0.5), 
+          make_cell(width: 50.5, border_width: 0.5) 
+        ],
+        [
+          make_cell(height: 28, border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5)
+        ],
+        [
+          make_cell(height: 28, border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5)
+        ],
+        [
+          make_cell(height: 28, border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5)
         ]
       ]){
       }
