@@ -2,6 +2,7 @@ class EstimatePdf < Prawn::Document
   def initialize(estimate)
     super(page_size: 'A4', page_layout: :portrait) # 縦 = :portrait, 横 = :landscape
     @estimate = estimate
+    @table_data = @estimate['record']['estimate_details']['value']
 
     font_families.update('jp_font' => { normal: 'vendor/fonts/ipaexm.ttf', bold: 'vendor/fonts/ipaexg.ttf' }) # 日本語フォント
     font 'jp_font', style: :normal
@@ -214,10 +215,18 @@ class EstimatePdf < Prawn::Document
     draw_text @estimate['record']['estimate_delivery_date']['value'], size: 11, at: [375, 357]
     draw_text @estimate['record']['expiration_date']['value'], size: 11, at: [375, 335]
     
-    
-
-    # 見積日
-    # draw_text @estimate['record']['estimated_date']['value'], size: 11, at: [52, 195]
+    # 見積作成日
+    bounding_box([5, 210], width: 700, height: 700){
+      table([
+        [
+          make_cell(content: @estimate['record']['estimated_date_year']['value'], align: :right, size: 10, width: 45),
+          make_cell(content: @estimate['record']['estimated_date_month']['value'], align: :right, size: 10, width: 35),
+          make_cell(content: @estimate['record']['estimated_date_day']['value'], align: :right, size: 10, width: 36)
+        ]
+      ]){
+        cells.borders = []
+      }
+    }
 
     # 住所
     draw_text @estimate['record']['company_address']['value'], size: 11, at: [290, 128]
@@ -228,7 +237,7 @@ class EstimatePdf < Prawn::Document
   def products_data
     # 品名
     def estimate_product_name(value_num)
-      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_product_name']['value']
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_product_name']['value'] if @table_data[value_num].present?
     end
     
     draw_text estimate_product_name(0), size: 8, at: [30, 518]
@@ -241,7 +250,7 @@ class EstimatePdf < Prawn::Document
 
     # 規格(上段)
     def estimate_standard_1(value_num)
-      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_standard_1']['value']
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_standard_1']['value'] if @table_data[value_num].present?
     end
 
     draw_text estimate_standard_1(0), size: 6, at: [140, 525]
@@ -254,7 +263,7 @@ class EstimatePdf < Prawn::Document
 
     # 規格(下段)
     def estimate_standard_2(value_num)
-      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_standard_2']['value']
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_standard_2']['value'] if @table_data[value_num].present?
     end
 
     draw_text estimate_standard_2(0), size: 6, at: [140, 515]
@@ -267,7 +276,7 @@ class EstimatePdf < Prawn::Document
 
     # 単位
     def estimate_unit(value_num)
-      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_unit']['value']
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_unit']['value'] if @table_data[value_num].present?
     end
 
     draw_text estimate_unit(0), size: 10, at: [250, 517]
@@ -280,7 +289,7 @@ class EstimatePdf < Prawn::Document
 
     # 数量
     def estimate_quantity(value_num)
-      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_quantity']['value'].to_i.to_s(:delimited)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_quantity']['value'].to_i.to_s(:delimited) if @table_data[value_num].present?
     end
 
     bounding_box([285, 533], width: 700, height: 700){
@@ -313,7 +322,7 @@ class EstimatePdf < Prawn::Document
 
     # 単価
     def estimate_unit_price(value_num)
-      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited) if @table_data[value_num].present?
     end
 
     bounding_box([339, 533], width: 700, height: 700){
@@ -346,7 +355,7 @@ class EstimatePdf < Prawn::Document
 
     # 金額(小計)
     def estimate_subtotal_price(value_num)
-      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited)
+      @estimate['record']['estimate_details']['value'][value_num]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited) if @table_data[value_num].present?
     end
 
     bounding_box([441, 533], width: 700, height: 700){
@@ -376,24 +385,11 @@ class EstimatePdf < Prawn::Document
         cells.borders = []
       }
     }
-
-    # 見積作成日
-    bounding_box([5, 210], width: 700, height: 700){
-      table([
-        [
-          make_cell(content: @estimate['record']['estimated_date_year']['value'], align: :right, size: 10, width: 45),
-          make_cell(content: @estimate['record']['estimated_date_month']['value'], align: :right, size: 10, width: 35),
-          make_cell(content: @estimate['record']['estimated_date_day']['value'], align: :right, size: 10, width: 36)
-        ]
-      ]){
-        cells.borders = []
-      }
-    }
-    
   end
 
   def use_breakdown_data
-    draw_text "#{@estimate['record']['subject']['value']}　別紙明細の通り", size: 10, at: [30, 518]
+    draw_text "#{@estimate['record']['subject']['value']}　別紙内訳書の通り", size: 10, at: [30, 518]
+    draw_text '以下余白', size: 10, at: [140, 495]
   end
 
   def development

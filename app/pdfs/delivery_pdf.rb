@@ -8,6 +8,13 @@ class DeliveryPdf < Prawn::Document
 
     body
     development
+    # start_new_page
+    # body
+    # (1..100).each{|n|
+    #   if n % 4 == 0
+    #     print "(#{n-3}～#{n})"
+    #   end
+    # }
   end
 
   def body
@@ -156,6 +163,20 @@ class DeliveryPdf < Prawn::Document
       }
     }
 
+    draw_text '番号', size: 10.4, at: [36, 303]
+    draw_text '物　品　番　号', size: 10.4, at: [79, 303]
+    draw_text '品　　　　名', size: 10.4, at: [183, 304]
+    draw_text '会 社 部 品 番 号', size: 10, at: [267, 309]
+    draw_text '又　は　規　格', size: 10.6, at: [267, 298]
+    draw_text '程度', size: 10.3, at: [352, 304]
+    draw_text '単位', size: 10.3, at: [383, 304]
+    draw_text '数　量', size: 10.3, at: [415, 304]
+    draw_text '単　価', size: 10.3, at: [462, 304]
+    draw_text '金　　　　　額', size: 10.5, at: [519, 303]
+    draw_text '受　領', size: 10.5, at: [614, 309]
+    draw_text '数　量', size: 10.5, at: [614, 298]
+    draw_text '処　　置', size: 10, at: [656, 309]
+    draw_text 'コ ー ド', size: 11.3, at: [656, 298]
     bounding_box([31, 319], width: 700, height: 500) {
       table([
         [
@@ -172,7 +193,33 @@ class DeliveryPdf < Prawn::Document
           make_cell(width: 50.5, border_width: 0.5) 
         ],
         [
-          make_cell(height: 28, border_width: 0.5),
+          make_cell(height: 27.5, border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5)
+        ],
+        [
+          make_cell(height: 24.5, border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5),
+          make_cell(border_width: 0.5)
+        ],
+        [
+          make_cell(height: 28.5, border_width: 0.5),
           make_cell(border_width: 0.5),
           make_cell(border_width: 0.5),
           make_cell(border_width: 0.5),
@@ -196,19 +243,39 @@ class DeliveryPdf < Prawn::Document
           make_cell(border_width: 0.5),
           make_cell(border_width: 0.5),
           make_cell(border_width: 0.5)
+        ]
+      ]){
+      }
+    }
+
+    bounding_box([31, 186.5], width: 700, height: 500) {
+      table([
+        [
+          make_cell(rowspan: 3, width: 31.5, border_width: 0.5),
+          make_cell(width: 94.5, height: 23.5, border_width: 0.5),
+          make_cell(width: 84, border_width: 0.5),
+          make_cell(width: 73.5, border_width: 0.5),
+          make_cell(width: 63, border_width: 0.5),
+          make_cell(rowspan: 3, width: 31.5, border_width: 0.5),
+          make_cell(rowspan: 3, width: 292, border_width: 0.5)
         ],
         [
-          make_cell(height: 28, border_width: 0.5),
+          make_cell(height: 24, border_width: 0.5),
           make_cell(border_width: 0.5),
           make_cell(border_width: 0.5),
-          make_cell(border_width: 0.5),
-          make_cell(border_width: 0.5),
-          make_cell(border_width: 0.5),
-          make_cell(border_width: 0.5),
-          make_cell(border_width: 0.5),
-          make_cell(border_width: 0.5),
-          make_cell(border_width: 0.5),
-          make_cell(border_width: 0.5)
+          make_cell(rowspan: 2, border_width: 0.5)
+        ],
+        [
+          make_cell(colspan: 3, height: 48, border_width: 0.5)
+        ]
+      ]){
+      }
+    }
+
+    bounding_box([503.5, 91], width: 700, height: 500) {
+      table([
+        [
+          make_cell(rowspan: 3, width: 197.5, height: 15, border_width: 0.5)
         ]
       ]){
       }
