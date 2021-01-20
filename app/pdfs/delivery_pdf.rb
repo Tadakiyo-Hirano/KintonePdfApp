@@ -248,6 +248,16 @@ class DeliveryPdf < Prawn::Document
       }
     }
 
+    draw_text '検', size: 10.4, at: [39, 155]
+    draw_text '査', size: 10.4, at: [39, 113]
+    draw_text '指令番号', size: 10.4, at: [68, 176.5]
+    draw_text '方式', size: 10.4, at: [163, 176.5]
+    draw_text '納入年月日', size: 10.3, at: [247, 176.5]
+    draw_text '判定', size: 10.4, at: [320, 176.5]
+    draw_text '種類', size: 10.4, at: [68, 153]
+    draw_text '場所', size: 10.4, at: [163, 153]
+    draw_text '検査年月日', size: 10.4, at: [247, 153]
+    draw_text '所見', size: 10.4, at: [320, 152]
     bounding_box([31, 186.5], width: 700, height: 500) {
       table([
         [
