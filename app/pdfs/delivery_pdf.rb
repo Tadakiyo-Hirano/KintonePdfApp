@@ -7,6 +7,7 @@ class DeliveryPdf < Prawn::Document
     font 'jp_font', style: :normal
 
     body
+    products_data
     development
     # start_new_page
     # body
@@ -165,7 +166,7 @@ class DeliveryPdf < Prawn::Document
 
     draw_text '番号', size: 10.4, at: [36, 303]
     draw_text '物　品　番　号', size: 10.4, at: [79, 303]
-    draw_text '品　　　　名', size: 10.4, at: [183, 304]
+    draw_text '品　　　　名', size: 10.4, at: [183, 303]
     draw_text '会 社 部 品 番 号', size: 10, at: [267, 309]
     draw_text '又　は　規　格', size: 10.6, at: [267, 298]
     draw_text '程度', size: 10.3, at: [352, 304]
@@ -258,6 +259,29 @@ class DeliveryPdf < Prawn::Document
     draw_text '場所', size: 10.4, at: [163, 153]
     draw_text '検査年月日', size: 10.4, at: [247, 153]
     draw_text '所見', size: 10.4, at: [320, 152]
+    draw_text '上記のとおり検査結果を報告する。', size: 10.5, at: [79, 128]
+    draw_text '年', size: 10.5, at: [142, 117]
+    draw_text '月', size: 9.5, at: [174, 117]
+    draw_text '日', size: 9, at: [206, 117]
+    draw_text '検査官所属', size: 10.5, at: [79, 106]
+    draw_text '官職氏名', size: 10.5, at: [79, 95]
+    draw_text "\u329e", size: 10.7, at: [257, 95]
+    draw_text '受', size: 10.4, at: [386, 166.5]
+    draw_text '入', size: 10.4, at: [386, 145.5]
+    draw_text '・', size: 13, at: [384.5, 134]
+    draw_text '受', size: 10.4, at: [386, 124.5]
+    draw_text '領', size: 11, at: [386, 103]
+    draw_text '検査結果及び物品管理官の受入命令（受領命令）により', size: 10.5, at: [425, 162.5]
+    draw_text '受領した。', size: 10.5, at: [414, 152]
+    draw_text '年', size: 10.5, at: [487.5, 130]
+    draw_text '月', size: 9.5, at: [520, 130]
+    draw_text '日', size: 9, at: [552, 130]
+    draw_text '受', size: 10.5, at: [425, 119]
+    draw_text '領', size: 10.5, at: [441, 119]
+    draw_text '者', size: 10.5, at: [457, 119]
+    draw_text '所　　属', size: 10.5, at: [425, 108]
+    draw_text '官職氏名', size: 10.5, at: [425, 97]
+    draw_text "\u329e", size: 10.7, at: [635, 97]
     bounding_box([31, 186.5], width: 700, height: 500) {
       table([
         [
@@ -282,6 +306,7 @@ class DeliveryPdf < Prawn::Document
       }
     }
 
+    draw_text 'ページ中の第　　　　ページ', size: 10.5, at: [559, 80]  
     bounding_box([503.5, 91], width: 700, height: 500) {
       table([
         [
@@ -290,6 +315,12 @@ class DeliveryPdf < Prawn::Document
       ]){
       }
     }
+
+    draw_text '規格：Ａ列４番', size: 10.5, at: [622.5, 62.5]  
+  end
+
+  def products_data
+    
   end
 
   def development
