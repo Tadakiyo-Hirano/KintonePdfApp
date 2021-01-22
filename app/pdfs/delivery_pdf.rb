@@ -7,6 +7,7 @@ class DeliveryPdf < Prawn::Document
     font 'jp_font', style: :normal
 
     body
+    delivery_data
     products_data
     development
     # start_new_page
@@ -59,6 +60,9 @@ class DeliveryPdf < Prawn::Document
     draw_text '者', size: 10.5, at: [44.5, 385]
 
     draw_text '住所、会社名、代表者印', size: 10.6, at: [78, 447]
+    draw_text @delivery['record']['company_address']['value'], size: 9, at: [78, 420]
+    draw_text @delivery['record']['company_name']['value'], size: 10, at: [78, 405]
+    draw_text "代表取締役 #{@delivery['record']['director']['value']}", size: 10, at: [78, 390]
 
     draw_text '調達要求番号', size: 10.6, at: [267, 448]
     draw_text '確認番号', size: 10.5, at: [264, 424]
@@ -319,8 +323,17 @@ class DeliveryPdf < Prawn::Document
     draw_text '規格：Ａ列４番', size: 10.5, at: [622.5, 62.5]  
   end
 
+  def delivery_data
+    draw_text @delivery['record']['request_number']['value'], size: 9, at: [267, 436]
+    draw_text @delivery['record']['authorization_number']['value'], size: 9, at: [267, 412]
+    draw_text @delivery['record']['contract_date']['value'], size: 9, at: [267, 388]
+    draw_text @delivery['record']['contract_delivery_date']['value'], size: 9, at: [267, 364]
+  end
+
   def products_data
-    
+    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_standard_1']['value'], size: 9, at: [65, 277]
+    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_product_name']['value'], size: 9, at: [170, 277]
+    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_standard_2']['value'], size: 6, at: [250, 277]
   end
 
   def development
