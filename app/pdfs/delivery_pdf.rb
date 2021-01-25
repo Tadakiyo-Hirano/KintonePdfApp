@@ -5,11 +5,18 @@ class DeliveryPdf < Prawn::Document
 
     font_families.update('jp_font' => { normal: 'vendor/fonts/ipaexm.ttf', bold: 'vendor/fonts/ipaexg.ttf' }) # 日本語フォント
     font 'jp_font', style: :normal
-
+    
     body
     delivery_data
     products_data
     development
+    ((@delivery['record']['estimate_details']['value'].count / 4.to_f) - 1).ceil.times do
+      start_new_page
+      body
+      delivery_data
+      products_data
+      development
+    end
     # start_new_page
     # body
     # (1..100).each{|n|
@@ -331,9 +338,52 @@ class DeliveryPdf < Prawn::Document
   end
 
   def products_data
-    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_standard_1']['value'], size: 9, at: [65, 277]
-    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_product_name']['value'], size: 9, at: [170, 277]
-    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_standard_2']['value'], size: 6, at: [250, 277]
+    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_standard_1']['value'], size: 7, at: [65, 277]
+    draw_text @delivery['record']['estimate_details']['value'][1]['value']['estimate_standard_1']['value'], size: 7, at: [65, 252]
+    draw_text @delivery['record']['estimate_details']['value'][2]['value']['estimate_standard_1']['value'], size: 7, at: [65, 226]
+    draw_text @delivery['record']['estimate_details']['value'][3]['value']['estimate_standard_1']['value'], size: 7, at: [65, 200]
+
+    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_product_name']['value'], size: 7, at: [170, 277]
+    draw_text @delivery['record']['estimate_details']['value'][1]['value']['estimate_product_name']['value'], size: 7, at: [170, 252]
+    draw_text @delivery['record']['estimate_details']['value'][2]['value']['estimate_product_name']['value'], size: 7, at: [170, 226]
+    draw_text @delivery['record']['estimate_details']['value'][3]['value']['estimate_product_name']['value'], size: 7, at: [170, 200]
+
+    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_standard_2']['value'], size: 6, at: [265, 277]
+    draw_text @delivery['record']['estimate_details']['value'][1]['value']['estimate_standard_2']['value'], size: 6, at: [265, 252]
+    draw_text @delivery['record']['estimate_details']['value'][2]['value']['estimate_standard_2']['value'], size: 6, at: [265, 226]
+    draw_text @delivery['record']['estimate_details']['value'][3]['value']['estimate_standard_2']['value'], size: 6, at: [265, 200]
+
+    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_unit']['value'], size: 6, at: [388, 277]
+    draw_text @delivery['record']['estimate_details']['value'][1]['value']['estimate_unit']['value'], size: 6, at: [388, 252]
+    draw_text @delivery['record']['estimate_details']['value'][2]['value']['estimate_unit']['value'], size: 6, at: [388, 226]
+    draw_text @delivery['record']['estimate_details']['value'][3]['value']['estimate_unit']['value'], size: 6, at: [388, 200]
+
+    bounding_box([395, 288], width: 700, height: 700){
+      table([
+        [
+          make_cell(content: @delivery['record']['estimate_details']['value'][0]['value']['estimate_quantity']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54, height: 25),
+          make_cell(content: @delivery['record']['estimate_details']['value'][0]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54),
+          make_cell(content: @delivery['record']['estimate_details']['value'][0]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 105)
+        ],
+        [
+          make_cell(content: @delivery['record']['estimate_details']['value'][1]['value']['estimate_quantity']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54, height: 25),
+          make_cell(content: @delivery['record']['estimate_details']['value'][1]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54),
+          make_cell(content: @delivery['record']['estimate_details']['value'][1]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 105)
+        ],
+        [
+          make_cell(content: @delivery['record']['estimate_details']['value'][2]['value']['estimate_quantity']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54, height: 27),
+          make_cell(content: @delivery['record']['estimate_details']['value'][2]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54),
+          make_cell(content: @delivery['record']['estimate_details']['value'][2]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 105)
+        ],
+        [
+          make_cell(content: @delivery['record']['estimate_details']['value'][3]['value']['estimate_quantity']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54, height: 23),
+          make_cell(content: @delivery['record']['estimate_details']['value'][3]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54),
+          make_cell(content: @delivery['record']['estimate_details']['value'][3]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 105)
+        ]
+      ]){
+        cells.borders = []
+      }
+    }
   end
 
   def development
