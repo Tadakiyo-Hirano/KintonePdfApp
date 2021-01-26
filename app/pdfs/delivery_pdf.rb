@@ -8,14 +8,32 @@ class DeliveryPdf < Prawn::Document
     
     body
     delivery_data
+
+    @first_line = 0
+    @second_line = 1
+    @third_line = 2
+    @fouth_line = 3
+
     products_data
     development
-    ((@delivery['record']['estimate_details']['value'].count / 4.to_f) - 1).ceil.times do
-      start_new_page
-      body
-      delivery_data
-      products_data
-      development
+    ((@delivery['record']['estimate_details']['value'].count.to_f)).ceil.times do |i|
+    # 12.times do |i|
+      if i % 4 == 0
+        if i > 3
+          @first_line = i
+          @second_line = i + 1
+          @third_line = i + 2
+          @fouth_line = i + 3
+
+          @x = (@fouth_line + @third_line) - (@first_line + @second_line)
+
+          start_new_page
+          body
+          delivery_data
+          products_data
+          development
+        end
+      end
     end
     # start_new_page
     # body
@@ -24,6 +42,12 @@ class DeliveryPdf < Prawn::Document
     #     print "(#{n-3}～#{n})"
     #   end
     # }
+
+    # 10.times do |i|
+    #   if i % 4 == 0
+    #     puts "#{i},#{i +1},#{i + 2},#{i + 3}"
+    #   end
+    # end
   end
 
   def body
@@ -337,48 +361,75 @@ class DeliveryPdf < Prawn::Document
     draw_text @delivery['record']['contract_delivery_date']['value'], size: 9, at: [267, 364]
   end
 
+  def value_num_present?(value_num)
+    @delivery['record']['estimate_details']['value'][value_num].present?
+  end
+
   def products_data
-    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_standard_1']['value'], size: 7, at: [65, 277]
-    draw_text @delivery['record']['estimate_details']['value'][1]['value']['estimate_standard_1']['value'], size: 7, at: [65, 252]
-    draw_text @delivery['record']['estimate_details']['value'][2]['value']['estimate_standard_1']['value'], size: 7, at: [65, 226]
-    draw_text @delivery['record']['estimate_details']['value'][3]['value']['estimate_standard_1']['value'], size: 7, at: [65, 200]
+    if value_num_present?(@first_line)
+      draw_text @delivery['record']['estimate_details']['value'][@first_line]['value']['estimate_standard_1']['value'], size: 7, at: [65, 277]
+      draw_text @delivery['record']['estimate_details']['value'][@first_line]['value']['estimate_product_name']['value'], size: 7, at: [170, 277]
+      draw_text @delivery['record']['estimate_details']['value'][@first_line]['value']['estimate_standard_2']['value'], size: 6, at: [265, 277]
+      draw_text @delivery['record']['estimate_details']['value'][@first_line]['value']['estimate_unit']['value'], size: 6, at: [388, 277]
+    end
 
-    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_product_name']['value'], size: 7, at: [170, 277]
-    draw_text @delivery['record']['estimate_details']['value'][1]['value']['estimate_product_name']['value'], size: 7, at: [170, 252]
-    draw_text @delivery['record']['estimate_details']['value'][2]['value']['estimate_product_name']['value'], size: 7, at: [170, 226]
-    draw_text @delivery['record']['estimate_details']['value'][3]['value']['estimate_product_name']['value'], size: 7, at: [170, 200]
+    if value_num_present?(@second_line)
+      draw_text @delivery['record']['estimate_details']['value'][@second_line]['value']['estimate_standard_1']['value'], size: 7, at: [65, 252]
+      draw_text @delivery['record']['estimate_details']['value'][@second_line]['value']['estimate_product_name']['value'], size: 7, at: [170, 252]
+      draw_text @delivery['record']['estimate_details']['value'][@second_line]['value']['estimate_standard_2']['value'], size: 6, at: [265, 252]
+      draw_text @delivery['record']['estimate_details']['value'][@second_line]['value']['estimate_unit']['value'], size: 6, at: [388, 252]
+    end
 
-    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_standard_2']['value'], size: 6, at: [265, 277]
-    draw_text @delivery['record']['estimate_details']['value'][1]['value']['estimate_standard_2']['value'], size: 6, at: [265, 252]
-    draw_text @delivery['record']['estimate_details']['value'][2]['value']['estimate_standard_2']['value'], size: 6, at: [265, 226]
-    draw_text @delivery['record']['estimate_details']['value'][3]['value']['estimate_standard_2']['value'], size: 6, at: [265, 200]
+    if value_num_present?(@third_line)
+      draw_text @delivery['record']['estimate_details']['value'][@third_line]['value']['estimate_standard_1']['value'], size: 7, at: [65, 226]
+      draw_text @delivery['record']['estimate_details']['value'][@third_line]['value']['estimate_product_name']['value'], size: 7, at: [170, 226]
+      draw_text @delivery['record']['estimate_details']['value'][@third_line]['value']['estimate_standard_2']['value'], size: 6, at: [265, 226]
+      draw_text @delivery['record']['estimate_details']['value'][@third_line]['value']['estimate_unit']['value'], size: 6, at: [388, 226]
+    end
 
-    draw_text @delivery['record']['estimate_details']['value'][0]['value']['estimate_unit']['value'], size: 6, at: [388, 277]
-    draw_text @delivery['record']['estimate_details']['value'][1]['value']['estimate_unit']['value'], size: 6, at: [388, 252]
-    draw_text @delivery['record']['estimate_details']['value'][2]['value']['estimate_unit']['value'], size: 6, at: [388, 226]
-    draw_text @delivery['record']['estimate_details']['value'][3]['value']['estimate_unit']['value'], size: 6, at: [388, 200]
+    if value_num_present?(@fouth_line)
+      draw_text @delivery['record']['estimate_details']['value'][@fouth_line]['value']['estimate_standard_1']['value'], size: 7, at: [65, 200] 
+      draw_text @delivery['record']['estimate_details']['value'][@fouth_line]['value']['estimate_product_name']['value'], size: 7, at: [170, 200]
+      draw_text @delivery['record']['estimate_details']['value'][@fouth_line]['value']['estimate_standard_2']['value'], size: 6, at: [265, 200]
+      draw_text @delivery['record']['estimate_details']['value'][@fouth_line]['value']['estimate_unit']['value'], size: 6, at: [388, 200]
+    end
+    
+    draw_text (@delivery['record']['estimate_details']['value'].count / 4.to_f).ceil, size: 26, at: [0, 0]
+    draw_text @x, size: 26, at: [0, 30]
+
+    def estimate_quantity(value_num)
+      @delivery['record']['estimate_details']['value'][value_num]['value']['estimate_quantity']['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
+    end
+
+    def estimate_unit_price(value_num)
+      @delivery['record']['estimate_details']['value'][value_num]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
+    end
+
+    def estimate_subtotal_price(value_num)
+      @delivery['record']['estimate_details']['value'][value_num]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
+    end
 
     bounding_box([395, 288], width: 700, height: 700){
       table([
         [
-          make_cell(content: @delivery['record']['estimate_details']['value'][0]['value']['estimate_quantity']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54, height: 25),
-          make_cell(content: @delivery['record']['estimate_details']['value'][0]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54),
-          make_cell(content: @delivery['record']['estimate_details']['value'][0]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 105)
+          make_cell(content: estimate_quantity(@first_line), align: :right, size: 7, width: 54, height: 25),
+          make_cell(content: estimate_unit_price(@first_line), align: :right, size: 7, width: 54),
+          make_cell(content: estimate_subtotal_price(@first_line), align: :right, size: 7, width: 105)
         ],
         [
-          make_cell(content: @delivery['record']['estimate_details']['value'][1]['value']['estimate_quantity']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54, height: 25),
-          make_cell(content: @delivery['record']['estimate_details']['value'][1]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54),
-          make_cell(content: @delivery['record']['estimate_details']['value'][1]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 105)
+          make_cell(content: estimate_quantity(@second_line), align: :right, size: 7, width: 54, height: 25),
+          make_cell(content: estimate_unit_price(@second_line), align: :right, size: 7, width: 54),
+          make_cell(content: estimate_subtotal_price(@second_line), align: :right, size: 7, width: 105)
         ],
         [
-          make_cell(content: @delivery['record']['estimate_details']['value'][2]['value']['estimate_quantity']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54, height: 27),
-          make_cell(content: @delivery['record']['estimate_details']['value'][2]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54),
-          make_cell(content: @delivery['record']['estimate_details']['value'][2]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 105)
+          make_cell(content: estimate_quantity(@third_line), align: :right, size: 7, width: 54, height: 27),
+          make_cell(content: estimate_unit_price(@third_line), align: :right, size: 7, width: 54),
+          make_cell(content: estimate_subtotal_price(@third_line), align: :right, size: 7, width: 105)
         ],
         [
-          make_cell(content: @delivery['record']['estimate_details']['value'][3]['value']['estimate_quantity']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54, height: 23),
-          make_cell(content: @delivery['record']['estimate_details']['value'][3]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 54),
-          make_cell(content: @delivery['record']['estimate_details']['value'][3]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited), align: :right, size: 7, width: 105)
+          make_cell(content: estimate_quantity(@fouth_line), align: :right, size: 7, width: 54, height: 23),
+          make_cell(content: estimate_unit_price(@fouth_line), align: :right, size: 7, width: 54),
+          make_cell(content: estimate_subtotal_price(@fouth_line), align: :right, size: 7, width: 105)
         ]
       ]){
         cells.borders = []
