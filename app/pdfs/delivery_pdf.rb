@@ -9,48 +9,38 @@ class DeliveryPdf < Prawn::Document
     body
     delivery_data
 
+    def details
+      @delivery['record']['use_quote_data']['value'].present? ? 'estimate_details' : 'contract_details'
+    end
+
     @first_line = 0
     @second_line = 1
     @third_line = 2
     @fouth_line = 3
+    @page_num = 1
 
     products_data
-    development
-    ((@delivery['record']['estimate_details']['value'].count.to_f)).ceil.times do |i|
-    # 12.times do |i|
+    # development
+    ((@delivery['record'][details]['value'].count.to_f)).ceil.times do |i|
       if i % 4 == 0
         if i > 3
           @first_line = i
           @second_line = i + 1
           @third_line = i + 2
           @fouth_line = i + 3
-
-          @x = (@fouth_line + @third_line) - (@first_line + @second_line)
+          @page_num = (i / 4) + 1
 
           start_new_page
           body
           delivery_data
           products_data
-          development
         end
       end
     end
-    # start_new_page
-    # body
-    # (1..100).each{|n|
-    #   if n % 4 == 0
-    #     print "(#{n-3}～#{n})"
-    #   end
-    # }
-
-    # 10.times do |i|
-    #   if i % 4 == 0
-    #     puts "#{i},#{i +1},#{i + 2},#{i + 3}"
-    #   end
-    # end
   end
 
   def body
+    draw_text '別紙様式第３０－２', size: 10.3, at: [631, 478]
     draw_text '納入先', size: 10.5, at: [36.5, 462.5]
     draw_text '納', size: 10.5, at: [351, 464.5]
     draw_text '品', size: 10.5, at: [373, 464.5]
@@ -355,58 +345,84 @@ class DeliveryPdf < Prawn::Document
   end
 
   def delivery_data
+    draw_text @delivery['record']['delivery_place']['value'], size: 11, at: [78, 462]
     draw_text @delivery['record']['request_number']['value'], size: 9, at: [267, 436]
     draw_text @delivery['record']['authorization_number']['value'], size: 9, at: [267, 412]
     draw_text @delivery['record']['contract_date']['value'], size: 9, at: [267, 388]
     draw_text @delivery['record']['contract_delivery_date']['value'], size: 9, at: [267, 364]
   end
 
+  def standard_1
+    @delivery['record']['use_quote_data']['value'].present? ? 'estimate_standard_1' : 'contract_standard_1'
+  end
+
+  def standard_2
+    @delivery['record']['use_quote_data']['value'].present? ? 'estimate_standard_2' : 'contract_standard_2'
+  end
+
+  def product_name
+    @delivery['record']['use_quote_data']['value'].present? ? 'estimate_product_name' : 'contract_product_name'
+  end
+
+  def unit
+    @delivery['record']['use_quote_data']['value'].present? ? 'estimate_unit' : 'contract_unit'
+  end
+
+  def quantity
+    @delivery['record']['use_quote_data']['value'].present? ? 'estimate_quantity' : 'contract_quantity'
+  end
+
+  def unit_price
+    @delivery['record']['use_quote_data']['value'].present? ? 'estimate_unit_price' : 'contract_unit_price'
+  end
+
+  def subtotal_price
+    @delivery['record']['use_quote_data']['value'].present? ? 'estimate_subtotal_price' : 'contract_subtotal_price'
+  end
+
   def value_num_present?(value_num)
-    @delivery['record']['estimate_details']['value'][value_num].present?
+    @delivery['record'][details]['value'][value_num].present?
   end
 
   def products_data
     if value_num_present?(@first_line)
-      draw_text @delivery['record']['estimate_details']['value'][@first_line]['value']['estimate_standard_1']['value'], size: 7, at: [65, 277]
-      draw_text @delivery['record']['estimate_details']['value'][@first_line]['value']['estimate_product_name']['value'], size: 7, at: [170, 277]
-      draw_text @delivery['record']['estimate_details']['value'][@first_line]['value']['estimate_standard_2']['value'], size: 6, at: [265, 277]
-      draw_text @delivery['record']['estimate_details']['value'][@first_line]['value']['estimate_unit']['value'], size: 6, at: [388, 277]
+      draw_text @delivery['record'][details]['value'][@first_line]['value'][standard_1]['value'], size: 7, at: [65, 277]
+      draw_text @delivery['record'][details]['value'][@first_line]['value'][product_name]['value'], size: 7, at: [170, 277]
+      draw_text @delivery['record'][details]['value'][@first_line]['value'][standard_2]['value'], size: 6, at: [265, 277]
+      draw_text @delivery['record'][details]['value'][@first_line]['value'][unit]['value'], size: 6, at: [388, 277]
     end
 
     if value_num_present?(@second_line)
-      draw_text @delivery['record']['estimate_details']['value'][@second_line]['value']['estimate_standard_1']['value'], size: 7, at: [65, 252]
-      draw_text @delivery['record']['estimate_details']['value'][@second_line]['value']['estimate_product_name']['value'], size: 7, at: [170, 252]
-      draw_text @delivery['record']['estimate_details']['value'][@second_line]['value']['estimate_standard_2']['value'], size: 6, at: [265, 252]
-      draw_text @delivery['record']['estimate_details']['value'][@second_line]['value']['estimate_unit']['value'], size: 6, at: [388, 252]
+      draw_text @delivery['record'][details]['value'][@second_line]['value'][standard_1]['value'], size: 7, at: [65, 252]
+      draw_text @delivery['record'][details]['value'][@second_line]['value'][product_name]['value'], size: 7, at: [170, 252]
+      draw_text @delivery['record'][details]['value'][@second_line]['value'][standard_2]['value'], size: 6, at: [265, 252]
+      draw_text @delivery['record'][details]['value'][@second_line]['value'][unit]['value'], size: 6, at: [388, 252]
     end
 
     if value_num_present?(@third_line)
-      draw_text @delivery['record']['estimate_details']['value'][@third_line]['value']['estimate_standard_1']['value'], size: 7, at: [65, 226]
-      draw_text @delivery['record']['estimate_details']['value'][@third_line]['value']['estimate_product_name']['value'], size: 7, at: [170, 226]
-      draw_text @delivery['record']['estimate_details']['value'][@third_line]['value']['estimate_standard_2']['value'], size: 6, at: [265, 226]
-      draw_text @delivery['record']['estimate_details']['value'][@third_line]['value']['estimate_unit']['value'], size: 6, at: [388, 226]
+      draw_text @delivery['record'][details]['value'][@third_line]['value'][standard_1]['value'], size: 7, at: [65, 226]
+      draw_text @delivery['record'][details]['value'][@third_line]['value'][product_name]['value'], size: 7, at: [170, 226]
+      draw_text @delivery['record'][details]['value'][@third_line]['value'][standard_2]['value'], size: 6, at: [265, 226]
+      draw_text @delivery['record'][details]['value'][@third_line]['value'][unit]['value'], size: 6, at: [388, 226]
     end
 
     if value_num_present?(@fouth_line)
-      draw_text @delivery['record']['estimate_details']['value'][@fouth_line]['value']['estimate_standard_1']['value'], size: 7, at: [65, 200] 
-      draw_text @delivery['record']['estimate_details']['value'][@fouth_line]['value']['estimate_product_name']['value'], size: 7, at: [170, 200]
-      draw_text @delivery['record']['estimate_details']['value'][@fouth_line]['value']['estimate_standard_2']['value'], size: 6, at: [265, 200]
-      draw_text @delivery['record']['estimate_details']['value'][@fouth_line]['value']['estimate_unit']['value'], size: 6, at: [388, 200]
+      draw_text @delivery['record'][details]['value'][@fouth_line]['value'][standard_1]['value'], size: 7, at: [65, 200] 
+      draw_text @delivery['record'][details]['value'][@fouth_line]['value'][product_name]['value'], size: 7, at: [170, 200]
+      draw_text @delivery['record'][details]['value'][@fouth_line]['value'][standard_2]['value'], size: 6, at: [265, 200]
+      draw_text @delivery['record'][details]['value'][@fouth_line]['value'][unit]['value'], size: 6, at: [388, 200]
     end
-    
-    draw_text (@delivery['record']['estimate_details']['value'].count / 4.to_f).ceil, size: 26, at: [0, 0]
-    draw_text @x, size: 26, at: [0, 30]
 
     def estimate_quantity(value_num)
-      @delivery['record']['estimate_details']['value'][value_num]['value']['estimate_quantity']['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
+      @delivery['record'][details]['value'][value_num]['value'][quantity]['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
     end
 
     def estimate_unit_price(value_num)
-      @delivery['record']['estimate_details']['value'][value_num]['value']['estimate_unit_price']['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
+      @delivery['record'][details]['value'][value_num]['value'][unit_price]['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
     end
 
     def estimate_subtotal_price(value_num)
-      @delivery['record']['estimate_details']['value'][value_num]['value']['estimate_subtotal_price']['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
+      @delivery['record'][details]['value'][value_num]['value'][subtotal_price]['value'].to_i.to_s(:delimited) if value_num_present?(value_num)
     end
 
     bounding_box([395, 288], width: 700, height: 700){
@@ -435,6 +451,10 @@ class DeliveryPdf < Prawn::Document
         cells.borders = []
       }
     }
+
+    # xページ中の第xページ
+    draw_text (@delivery['record'][details]['value'].count / 4.to_f).ceil, size: 11, at: [530, 80]
+    draw_text @page_num, size: 11, at: [640, 80]
   end
 
   def development
