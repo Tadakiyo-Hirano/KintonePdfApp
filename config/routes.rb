@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :participations
   resources :estimates
   resources :deliverys
+  resources :invoices
 end
