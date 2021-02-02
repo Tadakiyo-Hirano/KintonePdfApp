@@ -7,6 +7,7 @@ class InvoicePdf < Prawn::Document
     font 'jp_font', style: :normal
 
     body
+    invoice_data
     development
   end
 
@@ -190,6 +191,24 @@ class InvoicePdf < Prawn::Document
     draw_text 'さ', size: 10.8, at: [455, 52]
     draw_text 'い', size: 10.8, at: [467, 52]
     draw_text '。', size: 10.8, at: [479, 52]
+  end
+
+  def invoice_data
+    draw_text @invoice['record']['company_address']['value'], size: 9, at: [310, 546]
+    draw_text @invoice['record']['company_name']['value'], size: 10, at: [310, 534]
+    draw_text "代表取締役 #{@invoice['record']['director']['value']}", size: 10, at: [310, 522]
+
+    draw_text @invoice['record']['bank_name']['value'], size: 10, at: [65, 53]
+    draw_text @invoice['record']['branch_name']['value'], size: 10, at: [130, 53]
+
+    bank_account_type = @invoice['record']['bank_account_type']['value']
+    if bank_account_type == '当座'
+      stroke_ellipse [228,56], 18, 13
+    elsif bank_account_type == '普通'
+      stroke_ellipse [269,56], 18, 13
+    end
+
+    draw_text @invoice['record']['bank_account_number']['value'], size: 10, at: [300, 53]
   end
 
   def development
