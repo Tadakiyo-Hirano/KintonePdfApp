@@ -6,9 +6,56 @@ class InvoicePdf < Prawn::Document
     font_families.update('jp_font' => { normal: 'vendor/fonts/ipaexm.ttf', bold: 'vendor/fonts/ipaexg.ttf' }) # 日本語フォント
     font 'jp_font', style: :normal
 
+    @use_invoice = @invoice['record']['use_invoice']['value']
+
     body
     invoice_data
-    development
+
+    def details
+      if @use_invoice.include?("見積")
+        'estimate_details'
+      elsif @use_invoice.include?('納品')
+        'contract_details'
+      elsif @use_invoice.include?('請求')
+        'invoice_details'
+      end
+    end
+    
+    @first_line = 0
+    @second_line = 1
+    @third_line = 2
+    @fouth_line = 3
+    @five_line = 4
+    @six_line = 5
+    @seven_line = 6
+    @eight_line = 7
+    @nine_line = 8
+    @page_num = 1
+
+    products_data
+    # development
+
+    ((@invoice['record'][details]['value'].count.to_f)).ceil.times do |i|
+      if i % 9 == 0
+        if i > 8
+          @first_line = i
+          @second_line = i + 1
+          @third_line = i + 2
+          @fouth_line = i + 3
+          @five_line = i + 4
+          @six_line = i + 5
+          @seven_line = i + 6
+          @eight_line = i + 7
+          @nine_line = i + 8
+          @page_num = (i / 9) + 1
+
+          start_new_page
+          body
+          invoice_data
+          products_data
+        end
+      end
+    end
   end
 
   def body
@@ -209,6 +256,123 @@ class InvoicePdf < Prawn::Document
     end
 
     draw_text @invoice['record']['bank_account_number']['value'], size: 10, at: [300, 53]
+  end
+
+  def standard_1
+    if @use_invoice.include?("見積")
+      'estimate_standard_1'
+    elsif @use_invoice.include?('納品')
+      'contract_standard_1'
+    elsif @use_invoice.include?('請求')
+      'invoice_standard_1'
+    end
+  end
+
+  def standard_2
+    if @use_invoice.include?("見積")
+      'estimate_standard_2'
+    elsif @use_invoice.include?('納品')
+      'contract_standard_2'
+    elsif @use_invoice.include?('請求')
+      'invoice_standard_2'
+    end
+  end
+
+  def product_name
+    if @use_invoice.include?("見積")
+      'estimate_product_name'
+    elsif @use_invoice.include?('納品')
+      'contract_product_name'
+    elsif @use_invoice.include?('請求')
+      'invoice_product_name'
+    end
+  end
+
+  def unit
+    if @use_invoice.include?("見積")
+      'estimate_unit'
+    elsif @use_invoice.include?('納品')
+      'contract_unit'
+    elsif @use_invoice.include?('請求')
+      'invoice_unit'
+    end
+  end
+
+  def value_num_present?(value_num)
+    @invoice['record'][details]['value'][value_num].present?
+  end
+
+  def products_data
+    if value_num_present?(@first_line)
+      draw_text @invoice['record'][details]['value'][@first_line]['value'][product_name]['value'], size: 7, at: [57, 351]
+      draw_text @invoice['record'][details]['value'][@first_line]['value'][standard_1]['value'], size: 7, at: [178, 359]
+      draw_text @invoice['record'][details]['value'][@first_line]['value'][standard_2]['value'], size: 6, at: [178, 345]
+      draw_text @invoice['record'][details]['value'][@first_line]['value'][unit]['value'], size: 7, at: [284, 351]
+      # draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@second_line)
+    end
+
+    if value_num_present?(@second_line)
+      draw_text @invoice['record'][details]['value'][@second_line]['value'][product_name]['value'], size: 7, at: [57, 320]
+      draw_text @invoice['record'][details]['value'][@second_line]['value'][standard_1]['value'], size: 7, at: [178, 326]
+      draw_text @invoice['record'][details]['value'][@second_line]['value'][standard_2]['value'], size: 6, at: [178, 312]
+      draw_text @invoice['record'][details]['value'][@second_line]['value'][unit]['value'], size: 7, at: [284, 320]
+      # draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@third_line)
+    end
+
+    if value_num_present?(@third_line)
+      draw_text @invoice['record'][details]['value'][@third_line]['value'][product_name]['value'], size: 7, at: [57, 286]
+      draw_text @invoice['record'][details]['value'][@third_line]['value'][standard_1]['value'], size: 7, at: [178, 292]
+      draw_text @invoice['record'][details]['value'][@third_line]['value'][standard_2]['value'], size: 6, at: [178, 278]
+      draw_text @invoice['record'][details]['value'][@third_line]['value'][unit]['value'], size: 7, at: [284, 286]
+      # draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@fouth_line)
+    end
+
+    if value_num_present?(@fouth_line)
+      draw_text @invoice['record'][details]['value'][@fouth_line]['value'][product_name]['value'], size: 7, at: [57, 252]
+      draw_text @invoice['record'][details]['value'][@fouth_line]['value'][standard_1]['value'], size: 7, at: [178, 259]
+      draw_text @invoice['record'][details]['value'][@fouth_line]['value'][standard_2]['value'], size: 6, at: [178, 245]
+      draw_text @invoice['record'][details]['value'][@fouth_line]['value'][unit]['value'], size: 7, at: [284, 252]
+      # draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@five_line)
+    end
+
+    if value_num_present?(@five_line)
+      draw_text @invoice['record'][details]['value'][@five_line]['value'][product_name]['value'], size: 7, at: [57, 218]
+      draw_text @invoice['record'][details]['value'][@five_line]['value'][standard_1]['value'], size: 7, at: [178, 225]
+      draw_text @invoice['record'][details]['value'][@five_line]['value'][standard_2]['value'], size: 6, at: [178, 211]
+      draw_text @invoice['record'][details]['value'][@five_line]['value'][unit]['value'], size: 7, at: [284, 218]
+      # draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@six_line)
+    end
+
+    if value_num_present?(@six_line)
+      draw_text @invoice['record'][details]['value'][@six_line]['value'][product_name]['value'], size: 7, at: [57, 186]
+      draw_text @invoice['record'][details]['value'][@six_line]['value'][standard_1]['value'], size: 7, at: [178, 193]
+      draw_text @invoice['record'][details]['value'][@six_line]['value'][standard_2]['value'], size: 6, at: [178, 179]
+      draw_text @invoice['record'][details]['value'][@six_line]['value'][unit]['value'], size: 7, at: [284, 186]
+      # draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@seven_line)
+    end
+
+    if value_num_present?(@seven_line)
+      draw_text @invoice['record'][details]['value'][@seven_line]['value'][product_name]['value'], size: 7, at: [57, 154]
+      draw_text @invoice['record'][details]['value'][@seven_line]['value'][standard_1]['value'], size: 7, at: [178, 161]
+      draw_text @invoice['record'][details]['value'][@seven_line]['value'][standard_2]['value'], size: 6, at: [178, 147]
+      draw_text @invoice['record'][details]['value'][@seven_line]['value'][unit]['value'], size: 7, at: [284, 154]
+      # draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@eight_line)
+    end
+
+    if value_num_present?(@eight_line)
+      draw_text @invoice['record'][details]['value'][@eight_line]['value'][product_name]['value'], size: 7, at: [57, 121]
+      draw_text @invoice['record'][details]['value'][@eight_line]['value'][standard_1]['value'], size: 7, at: [178, 128]
+      draw_text @invoice['record'][details]['value'][@eight_line]['value'][standard_2]['value'], size: 6, at: [178, 114]
+      draw_text @invoice['record'][details]['value'][@eight_line]['value'][unit]['value'], size: 7, at: [284, 121]
+      # draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@nine_line)
+    end
+
+    if value_num_present?(@nine_line)
+      draw_text @invoice['record'][details]['value'][@nine_line]['value'][product_name]['value'], size: 7, at: [57, 88]
+      draw_text @invoice['record'][details]['value'][@nine_line]['value'][standard_1]['value'], size: 7, at: [178, 95]
+      draw_text @invoice['record'][details]['value'][@nine_line]['value'][standard_2]['value'], size: 6, at: [178, 81]
+      draw_text @invoice['record'][details]['value'][@nine_line]['value'][unit]['value'], size: 7, at: [284, 88]
+    end
   end
 
   def development

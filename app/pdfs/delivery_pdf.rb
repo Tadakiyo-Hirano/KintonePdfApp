@@ -21,6 +21,7 @@ class DeliveryPdf < Prawn::Document
 
     products_data
     # development
+    
     ((@delivery['record'][details]['value'].count.to_f)).ceil.times do |i|
       if i % 4 == 0
         if i > 3
@@ -384,12 +385,20 @@ class DeliveryPdf < Prawn::Document
     @delivery['record'][details]['value'][value_num].present?
   end
 
+  def below_is_the_margin
+    @delivery_count = (@delivery['record'][details]['value'].count)
+    if (@delivery_count / 4.to_f).ceil == @page_num && @delivery_count % 4 != 0
+      '以下余白'
+    end
+  end
+
   def products_data
     if value_num_present?(@first_line)
       draw_text @delivery['record'][details]['value'][@first_line]['value'][standard_1]['value'], size: 7, at: [65, 277]
       draw_text @delivery['record'][details]['value'][@first_line]['value'][product_name]['value'], size: 7, at: [170, 277]
       draw_text @delivery['record'][details]['value'][@first_line]['value'][standard_2]['value'], size: 6, at: [265, 277]
       draw_text @delivery['record'][details]['value'][@first_line]['value'][unit]['value'], size: 6, at: [388, 277]
+      draw_text below_is_the_margin, size: 7, at: [65, 252] unless value_num_present?(@second_line)
     end
 
     if value_num_present?(@second_line)
@@ -397,6 +406,7 @@ class DeliveryPdf < Prawn::Document
       draw_text @delivery['record'][details]['value'][@second_line]['value'][product_name]['value'], size: 7, at: [170, 252]
       draw_text @delivery['record'][details]['value'][@second_line]['value'][standard_2]['value'], size: 6, at: [265, 252]
       draw_text @delivery['record'][details]['value'][@second_line]['value'][unit]['value'], size: 6, at: [388, 252]
+      draw_text below_is_the_margin, size: 7, at: [65, 226] unless value_num_present?(@third_line)
     end
 
     if value_num_present?(@third_line)
@@ -404,6 +414,7 @@ class DeliveryPdf < Prawn::Document
       draw_text @delivery['record'][details]['value'][@third_line]['value'][product_name]['value'], size: 7, at: [170, 226]
       draw_text @delivery['record'][details]['value'][@third_line]['value'][standard_2]['value'], size: 6, at: [265, 226]
       draw_text @delivery['record'][details]['value'][@third_line]['value'][unit]['value'], size: 6, at: [388, 226]
+      draw_text below_is_the_margin, size: 7, at: [65, 200] unless value_num_present?(@fouth_line)
     end
 
     if value_num_present?(@fouth_line)
