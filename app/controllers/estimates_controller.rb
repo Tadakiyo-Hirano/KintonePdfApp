@@ -12,7 +12,7 @@ class EstimatesController < ApplicationController
       req = Net::HTTP::Get.new(uri.path)
       req['X-Cybozu-API-Token'] = ENV['API_TOKEN']
       req['Content-Type'] = 'application/json'
-      req.body = JSON.generate({"app": 75, "id": 1 })
+      req.body = JSON.generate({"app": ENV['APP_ID'], "id": 1 })
 
       Net::HTTP.start(uri.host, uri.port, :use_ssl => true) {|http|
         res = http.request(req)
