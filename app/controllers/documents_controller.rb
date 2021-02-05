@@ -27,15 +27,13 @@ class DocumentsController < ApplicationController
     token = get_access_token
 
     if token
-      # token.get("#{DOMAIN}/k/v1/record.json", {:body => record.to_json, :headers => {'Authorization' => "Bearer #{token.token}", 'Content-Type' => 'application/json'}})
-      
       record_id = params[:id]
-      # api = Kintone::Api.new("akt-mac.cybozu.com", 75, 'macmac241')
+
       url = "https://akt-mac.cybozu.com/k/v1/record.json"
       uri = URI.parse(url)
-      # api_token = k.token
+
       req = Net::HTTP::Get.new(uri.path)
-      req['X-Cybozu-API-Token'] = 'vltS2Jbm8GgWlrck1oUR88eLmmvTx3IvafBAXEVC'
+      req['X-Cybozu-API-Token'] = ENV['API_TOKEN']
       req['Content-Type'] = 'application/json'
       req.body = JSON.generate({"app": 75, "id": record_id })
 

@@ -6,5 +6,8 @@ class AuthController < ApplicationController
     token = get_token_from_code params[:code]
     session[:kintone_token] = token.to_hash
     redirect_to documents_url
+  rescue
+    flash[:alert] = 'ログインをキャンセルしました。'
+    redirect_to root_url
   end
 end
