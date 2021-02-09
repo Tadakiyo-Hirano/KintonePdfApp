@@ -8,6 +8,7 @@ class DocumentsController < ApplicationController
   end
 
   def show
+    $kintone_app_record = params[:id]
     token = get_access_token
 
     if token
@@ -25,6 +26,20 @@ class DocumentsController < ApplicationController
         res = http.request(req)
         res.code.to_i
         @document = JSON.parse(res.body)
+      }
+
+      app_url = "https://akt-mac.cybozu.com/k/v1/app.json"
+      app_uri = URI.parse(app_url)
+
+      app_req = Net::HTTP::Get.new(app_uri.path)
+      app_req['X-Cybozu-API-Token'] = ENV['API_TOKEN']
+      app_req['Content-Type'] = 'application/json'
+      app_req.body = JSON.generate({"app": ENV['APP_ID'], "id": ENV['APP_ID'] })
+
+      Net::HTTP.start(app_uri.host, app_uri.port, :use_ssl => true) {|http|
+        app_res = http.request(app_req)
+        app_res.code.to_i
+        @app_data = JSON.parse(app_res.body)
       }
     else
       redirect_to root_uri

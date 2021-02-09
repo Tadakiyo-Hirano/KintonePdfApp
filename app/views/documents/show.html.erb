@@ -1,0 +1,26 @@
+<h1 class="center"><%= @app_data['name'] %></h1>
+<div class="document_group center">
+  <div class="document_link">
+    <%= link_to "参加申込書", "#{participation_path($kintone_app_record)}.pdf", class: "btn btn--primary", target: :_blank %>
+  </div>
+  <div class="document_link">
+    <%= link_to '見積書', "#{estimate_path($kintone_app_record)}.pdf", class: "btn btn--primary", target: :_blank %>
+  </div>
+  <div class="document_link">
+    <%= link_to '納品書', "#{delivery_path($kintone_app_record)}.pdf", class: "btn btn--primary", target: :_blank %>
+  </div>
+  <div class="document_link">
+    <%= link_to '請求書', "#{invoice_path($kintone_app_record)}.pdf", class: "btn btn--primary", target: :_blank %>
+  </div>
+</div>
+
+<style>
+  .document_group {
+    margin-top: 100px;
+  }
+
+  .document_link {
+    display: inline-block;
+    margin: 5px;
+  }
+</style>
