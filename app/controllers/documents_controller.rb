@@ -14,7 +14,7 @@ class DocumentsController < ApplicationController
     if token
       record_id = params[:id]
 
-      url = "https://akt-mac.cybozu.com/k/v1/record.json"
+      url = "https://#{ENV['SITE']}.cybozu.com/k/v1/record.json"
       uri = URI.parse(url)
 
       req = Net::HTTP::Get.new(uri.path)
@@ -28,7 +28,7 @@ class DocumentsController < ApplicationController
         @document = JSON.parse(res.body)
       }
 
-      app_url = "https://akt-mac.cybozu.com/k/v1/app.json"
+      app_url = "https://#{ENV['SITE']}.cybozu.com/k/v1/app.json"
       app_uri = URI.parse(app_url)
 
       app_req = Net::HTTP::Get.new(app_uri.path)
@@ -41,8 +41,6 @@ class DocumentsController < ApplicationController
         app_res.code.to_i
         @app_data = JSON.parse(app_res.body)
       }
-    else
-      redirect_to root_uri
     end
   rescue
     redirect_to root_url

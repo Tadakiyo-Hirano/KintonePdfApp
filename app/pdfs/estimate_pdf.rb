@@ -388,7 +388,7 @@ class EstimatePdf < Prawn::Document
   end
 
   def use_breakdown_data
-    draw_text "#{@estimate['record']['subject']['value']}　別紙内訳書の通り", size: 10, at: [30, 518]
+    draw_text "#{@estimate['record']['subject']['value']}　#{@estimate['record']['use_breakdown_text']['value']}", size: 10, at: [30, 518]
     draw_text '以下余白', size: 10, at: [140, 495]
   end
 

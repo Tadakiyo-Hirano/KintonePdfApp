@@ -36,7 +36,5 @@ class InvoicesController < ApplicationController
         end
       end
     end
-  rescue
-    redirect_to root_url
   end
 end
