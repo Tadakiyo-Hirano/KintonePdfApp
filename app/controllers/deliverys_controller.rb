@@ -16,7 +16,6 @@ class DeliverysController < ApplicationController
       req['X-Cybozu-API-Token'] = ENV['API_TOKEN']
       req['Content-Type'] = 'application/json'
       req.body = JSON.generate({"app": ENV['APP_ID'], "id": record_id })
-      $aaaa = record_id
 
       Net::HTTP.start(uri.host, uri.port, :use_ssl => true) {|http|
         res = http.request(req)

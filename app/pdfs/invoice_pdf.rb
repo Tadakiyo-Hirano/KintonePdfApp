@@ -475,6 +475,11 @@ class InvoicePdf < Prawn::Document
         cells.borders = []
       }
     }
+
+    # xページ中の第xページ
+    draw_text 'ページ中の第　　　　ページ', size: 10.5, at: [380, 20]  
+    draw_text (@invoice['record'][details]['value'].count / 9.to_f).ceil, size: 11, at: [355, 20]
+    draw_text @page_num, size: 11, at: [460, 20]
   end
 
   def total
