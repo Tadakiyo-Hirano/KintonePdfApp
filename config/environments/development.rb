@@ -61,5 +61,6 @@ Rails.application.configure do
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
-  config.hosts << ".ngrok.io" if Rails.env.development?
+  # config.hosts << ".ngrok.io" if Rails.env.development?
+  config.hosts << "bid-document-output.herokuapp.com"
 end

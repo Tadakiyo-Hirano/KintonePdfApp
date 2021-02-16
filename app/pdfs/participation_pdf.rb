@@ -8,7 +8,7 @@ class ParticipationPdf < Prawn::Document
 
     body
     data
-    development
+    # development
   end
 
   def body
