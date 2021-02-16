@@ -30,7 +30,7 @@ class DeliverysController < ApplicationController
     
           # disposition: "inline" によりPDFはダウンロードではなく画面に表示される
           send_data pdf.render,
-            filename:    "納品書#{@delivery['record']['serial_number']['value']}.pdf",
+            filename:    "納品書_#{@delivery['record']['authorization_number']['value']}.pdf",
             type:        "application/pdf",
             disposition: "inline"
         end

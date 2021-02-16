@@ -30,7 +30,7 @@ class EstimatesController < ApplicationController
     
           # disposition: "inline" によりPDFはダウンロードではなく画面に表示される
           send_data pdf.render,
-            filename:    "見積書#{@estimate['record']['serial_number']['value']}.pdf",
+            filename:    "見積書_#{@estimate['record']['authorization_number']['value']}.pdf",
             type:        "application/pdf",
             disposition: "inline"
         end

@@ -30,7 +30,7 @@ class InvoicesController < ApplicationController
     
           # disposition: "inline" によりPDFはダウンロードではなく画面に表示される
           send_data pdf.render,
-            filename:    "請求書#{@invoice['record']['serial_number']['value']}.pdf",
+            filename:    "請求書_#{@invoice['record']['authorization_number']['value']}.pdf",
             type:        "application/pdf",
             disposition: "inline"
         end

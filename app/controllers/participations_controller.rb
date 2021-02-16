@@ -30,7 +30,7 @@ class ParticipationsController < ApplicationController
     
           # disposition: "inline" によりPDFはダウンロードではなく画面に表示される
           send_data pdf.render,
-            filename:    "参加申込書#{@participation['record']['serial_number']['value']}.pdf",
+            filename:    "参加申込書_#{@participation['record']['serial_number']['value']}.pdf",
             type:        "application/pdf",
             disposition: "inline"
         end
